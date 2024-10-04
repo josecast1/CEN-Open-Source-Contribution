@@ -633,6 +633,16 @@ void EditorThemeManager::_create_shared_styles(const Ref<EditorTheme> &p_theme, 
 			// in 4.0, and even if it was, it may not always work in practice (e.g. running with compositing disabled).
 			p_config.popup_style->set_corner_radius_all(0);
 
+			// Same as from PopUpMenu
+			p_config.popup_style = p_config.base_style->duplicate();
+			p_config.popup_style->set_content_margin_individual(EDSCALE, 2 * EDSCALE, EDSCALE, 2 * EDSCALE);
+            p_config.popup_style->set_border_width_all(2);
+            if (p_config.draw_extra_borders) {
+                p_config.popup_style->set_border_color(p_config.extra_border_color_2);
+            } else {
+                p_config.popup_style->set_border_color(p_config.dark_color_2);
+            }
+
 			p_config.window_style = p_config.popup_style->duplicate();
 			p_config.window_style->set_border_color(p_config.base_color);
 			p_config.window_style->set_border_width(SIDE_TOP, 24 * EDSCALE);
@@ -2125,7 +2135,7 @@ void EditorThemeManager::_populate_editor_styles(const Ref<EditorTheme> &p_theme
 			control_editor_popup_style->set_content_margin(SIDE_TOP, p_config.base_margin * EDSCALE);
 			control_editor_popup_style->set_content_margin(SIDE_RIGHT, p_config.base_margin * EDSCALE);
 			control_editor_popup_style->set_content_margin(SIDE_BOTTOM, p_config.base_margin * EDSCALE);
-			control_editor_popup_style->set_border_width_all(0);
+			control_editor_popup_style->set_border_width_all(2);
 
 			p_theme->set_stylebox(SceneStringName(panel), "ControlEditorPopupPanel", control_editor_popup_style);
 		}
